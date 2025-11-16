@@ -1,5 +1,5 @@
 (executable
  (public_name snake)
  (name main)
- (modules main InputOutput snake game)
+ (modules main InputOutput snake)
  (libraries unix))
