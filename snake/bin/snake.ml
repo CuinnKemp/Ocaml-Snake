@@ -9,6 +9,7 @@ type direction =
   | Down
   | Left
   | Right
+  | Initial
 
 type snake = {
   body: (int * int) Queue.t;
@@ -16,20 +17,8 @@ type snake = {
   mutable dir : direction;
 }
 
-let kbhit () =
-  let read_fds, _, _ = Unix.select [Unix.stdin] [] [] 0.0 in
-  read_fds <> []
-
-let read_char_nonblock () =
-  if kbhit () then
-    let buf = Bytes.create 1 in
-    let _ = Unix.read Unix.stdin buf 0 1 in
-    Some (Bytes.get buf 0)
-  else
-    None
-
 let update_direction snake =
-  match read_char_nonblock () with
+  match InputOutput.read_char_nonblock () with
   | Some 'w' -> snake.dir <- if (snake.dir != Down) then Up else Down
   | Some 's' -> snake.dir <- if (snake.dir != Up) then Down else Up
   | Some 'a' -> snake.dir <- if (snake.dir != Right) then Left else Right
@@ -39,7 +28,7 @@ let update_direction snake =
 let createSnake () = 
   let queue = Queue.create () in
   Queue.add (10, 10) queue;
-  {body = queue; head = (10,10); dir = Right}
+  {body = queue; head = (10,10); dir = Initial}
 
 
 let createGameField () = 
@@ -81,6 +70,8 @@ let updateSnake snake gameField =
     | Down -> headX, headY + 1
     | Left -> headX - 1, headY
     | Right -> headX + 1, headY
+    | Initial -> gameField.(headX).(headY) <- Empty;
+            headX, headY
   in 
   
   let shouldFail = 
