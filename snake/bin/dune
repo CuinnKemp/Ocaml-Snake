@@ -1,0 +1,5 @@
+(executable
+ (public_name snake)
+ (name main)
+ (modules main snake)
+ (libraries unix))
