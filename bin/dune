@@ -1,5 +1,5 @@
 (executable
  (public_name snake)
  (name main)
- (modules main InputOutput snake)
+ (modules tools snake tetris main)
  (libraries unix))

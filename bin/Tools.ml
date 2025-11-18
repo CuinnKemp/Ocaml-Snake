@@ -9,3 +9,6 @@ let read_char_nonblock () =
     Some (Bytes.get buf 0)
   else
     None
+
+let safe_init n f = 
+  if n <= 0 then [] else List.init n f

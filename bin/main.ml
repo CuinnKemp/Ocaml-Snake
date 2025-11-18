@@ -16,9 +16,17 @@ let restore_terminal () =
 
 
 let () =
+  print_endline "(A) Snake\n(B) Tetris\n(_) Exit";
+  let gameFunc : unit -> unit = 
+    let gameChoice = read_line () in
+    match gameChoice with 
+    | "A" | "a" -> Snake.main
+    | "B" | "b" -> Tetris.main
+    | _ -> (fun () -> ())
+  in
   set_raw_mode ();
   try
-    Snake.main ();          (* your existing main *)
+    gameFunc ();
     restore_terminal ()
   with e ->
     restore_terminal ();

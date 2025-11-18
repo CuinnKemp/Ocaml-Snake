@@ -18,7 +18,7 @@ type snake = {
 }
 
 let update_direction snake =
-  match InputOutput.read_char_nonblock () with
+  match Tools.read_char_nonblock () with
   | Some 'w' -> snake.dir <- if (snake.dir != Down) then Up else Down
   | Some 's' -> snake.dir <- if (snake.dir != Up) then Down else Up
   | Some 'a' -> snake.dir <- if (snake.dir != Right) then Left else Right
